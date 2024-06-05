@@ -9,13 +9,14 @@
 \usepackage{mathtools} % for additional math tools
 \usepackage{amsthm} % for theorem environments
 \usepackage[margin=1.5cm]{geometry}
+\usepackage{enumitem}
 \begin{document}
 
 \maketitle
 
 \section{CNF}
 \begin{tabular}{ccccccccc}
-    P & Q  & \neg Q & P \lor Q & P \land Q & \neg Q \lor P & \neg Q \land P & Q \Rightarrow P & P \iff Q\\
+    $P$ & $Q$  & $\neg Q$ & $P \lor Q$ & $P \land Q$ & $\neg Q \lor P$ & $\neg Q \land P$ & $Q \Rightarrow P$ & $P \iff Q$\\
     true&true&false&true&true&true&false&true&true\\
     true&false&true&true&false&true&true&true&false\\
     false&true&false&true&false&false&false&false&false\\
@@ -26,28 +27,146 @@ so we can conclude that:
     \item $Q \Rightarrow P \equiv \neg Q \lor P$
     \item $Q \iff P \equiv P \Rightarrow Q \land P \Leftarrow Q $
     \item $P \iff Q \equiv Q \Rightarrow P \land P \Rightarrow Q  \equiv (\neg Q \lor P) \land (\neg P \lor Q)$
+    \item $\neg \neg P \equiv P$
 \end{enumerate}
 convert each of the following formulas to CNF:
+\subsection{1. $(P \Rightarrow \neg Q) \iff R$}
 \begin{equation}
     Q \Rightarrow P \equiv \neg Q \lor P
 \end{equation}
+\subsection{2. $\neg (P \land \neg Q) \Rightarrow \neg R \lor \neg Q$}
 \begin{equation}
     \begin{aligned}
         (P \Rightarrow \neg Q) \iff R &\overbrace{\equiv}^{\text{rule (2)}} (P \Rightarrow \neg Q) \Rightarrow R \land (P \Rightarrow \neg Q) \Leftarrow R\\
         &\overbrace{\equiv}^{\text{rule (1)}} (\neg (P \Rightarrow \neg Q) \lor R ) \land (( P \Rightarrow \neg Q) \lor \neg R)\\
         &\overbrace{\equiv}^{\text{rule (1)}} (\neg (\neg P \lor \neg Q) \lor R ) \land ((\neg P \lor \neg Q) \lor \neg R)\\
-        &\overbrace{\equiv}^{\text{De Morgan}} ((P \land Q) \lor R) \land (\neg P \lor \neg Q \lor \neg R)\\
-        &\overbrace{\equiv}^{\text{Distribution}} (P \lor R) \land ( Q \lor R) \land  (\neg P \lor \neg Q \lor \neg R)
+        &\overbrace{\equiv}^{\text{De Morgan}} ((  P \land  Q) \lor R) \land (\neg P \lor \neg Q \lor \neg R)\\
+        &\overbrace{\equiv}^{\text{Distribution}} ( P \lor R) \land (  Q \lor R) \land  (\neg P \lor \neg Q \lor \neg R)
     \end{aligned}
 \end{equation}
+\subsection{3. $\neg (P \land  \neg Q) \Rightarrow (\neg R\lor \neg Q)$}
 \begin{equation}
     \begin{aligned}
-        (\neg (P \land \neg Q) \Rightarrow \neg R \lor \neg Q &\overbrace{\equiv}^{\text{rule (1)}} (\neg(\neg(P \land \neg Q)) \lor (\neg R \lor \neg Q))
+        \neg (P \land \neg Q) \Rightarrow \neg R \lor \neg Q &\overbrace{\equiv}^{\text{rule (1)}} (\neg(\neg(P \land \neg Q)) \lor (\neg R \lor \neg Q))\\
+        &\overbrace{\equiv}^{\text{rule (4)}} ((P \land \neg Q) \lor \neg R \lor \neg Q)\\
+        &\overbrace{\equiv}^{\text{Distribution}} (P \lor \neg R \lor \neg Q) \land (\neg Q \lor \neg R)
+    \end{aligned}
+\end{equation}
+\subsection{4. $\neg (P \iff \neg Q) \Rightarrow R$}
+\begin{equation}
+    \begin{aligned}
+        \neg (P \iff \neg Q) \Rightarrow R &\overbrace{\equiv}^{\text{rule (3)}} \neg ((\neg P \lor \neg Q) \land (Q \lor P)) \Rightarrow R\\
+        &\overbrace{\equiv}^{\text{rule (1)}} \neg (\neg(( \neg P \lor \neg Q) \land  (Q \lor P))) \lor R\\
+        &\overbrace{\equiv}^{\text{rule (4)}} (( \neg P \lor \neg Q) \land  (Q \lor P)) \lor R\\
+        &\overbrace{\equiv}^{\text{Distribution}} (( \neg P \lor \neg Q) \lor R) \land ( (Q \lor P) \lor R)\\
+        &\overbrace{\equiv}^{\text{}} ( \neg P \lor \neg Q \lor R) \land ( Q \lor P \lor R)\\
+    \end{aligned}
+\end{equation}
+\subsection{5. $\neg (P \Rightarrow (\neg R \lor \neg Q)) \Rightarrow \neg R$}
+\begin{equation}
+    \begin{aligned}
+        \neg (P \Rightarrow (\neg R \lor \neg Q)) \Rightarrow \neg R &\overbrace{\equiv}^{\text{rule (1)}} \neg (\neg P \lor \neg R \lor \neg Q) \Rightarrow \neg R\\
+        &\overbrace{\equiv}^{\text{rule (1)}} \neg (\neg (\neg P \lor \neg R \lor \neg Q)) \lor \neg R\\
+        &\overbrace{\equiv}^{\text{rule (4)}} \neg P \lor \neg R \lor \neg Q \lor \neg R\\
+        &\overbrace{\equiv}^{\text{rule (4)}} \neg P \lor \neg R \lor \neg Q \lor \neg R\\
+        &\overbrace{\equiv}^{\text{rule (4)}} \neg P \lor \neg R \lor \neg Q \lor \neg R
     \end{aligned}
 \end{equation}
 
 
-\section{Problem 1}
+\section{Resolution}
+
+\subsection{Given G = Nitay carries an umbrella}
+Let's define the following predicates:
+\begin{itemize}
+    \item P = Nitay carries an umbrella
+    \item R = If it rains
+    \item W = Nitay dosen't get wet
+\end{itemize}
+So we can write the given statement as:
+\begin{enumerate}
+    \item $R \Rightarrow P \equiv \neg R \lor P$ 
+    \item $P \Rightarrow W \equiv \neg P \lor W$
+    \item $\neg R \Rightarrow W \equiv R \lor W$
+    \item $ W$
+    \item G = $P$
+\end{enumerate}
+Now we can start the algorithm, where KB=$(\neg R \lor P) \land (\neg P \lor W) \land (R \lor W) \land W$ and $\alpha =  P$\\
+(for the sake of simplicity we will use the following notation: $Q \lor P = Q+P$ and $\neg Q = Q' $ and $Q \land P = QP$)
+\begin{enumerate}
+    \item we will define C = $KB \land \neg P$ 
+    \item we will define new = $\emptyset$
+    \item forall $C_i, C_j$ in C:
+    \begin{enumerate}
+        \item $(R'+P)(P'+W) = P'P+P'R' = P'R'$
+        \item $(R'+P)(R+W) \equiv PR+PW+R'W$ 
+        \item $(R'+P)(W) \equiv WR'+PW$ 
+        \item $(R'+P)(P') \equiv P'R'+PP'\equiv R'P'$ 
+        \item $(P'+W)(R+W) \equiv W+RP' $ 
+        \item $(P'+W)(W) \equiv  P'W+W$ 
+        \item $(P'+W)(P') \equiv P'+P'W $ 
+        \item $(R+W)(W) \equiv RW+W $ 
+        \item $(R+W)(P') \equiv P'R+WP'$ 
+        \item $WP'$
+    \end{enumerate}
+    \item new = $\{P',R,(R'+P),(R+W),W,R',P',(P'+W)\}$
+    \item new $\not\subset$ C
+    \item C = C $\cup$ new
+    \item forall $C_i, C_j$ in C:
+    \begin{enumerate}
+        \item $R'R \equiv \emptyset$
+        \item since we got an empty clause will return true
+    \end{enumerate}
+\end{enumerate}
+according to the algorithm, we can cann't conclude that the Nitay carries an umbrella.
+
+\subsection{}
+First we will define the following predicates:
+\begin{itemize}
+    \item $P$: Animal make sound
+    \item $N$: Night
+    \item $C$: Have a cat
+    \item $M$: Have a mouse
+    \item $D$: Have a dog
+    \item $S$: Have Problem with falling asleep
+    \item $A$: Amit have animal
+\end{itemize}
+So we can write the given statement as:
+\begin{enumerate}
+    \item All hounds (dogs) bark at night $\equiv ND \Rightarrow P \equiv ((ND)'+P) \equiv (N'+D'+P)$
+    \item If you have a cat, you don’t have mice $\equiv C \Rightarrow M' \equiv (C'+M')$
+    \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv NS \Rightarrow D' \equiv ((NS)'+D') \equiv (N'+S'+D')$
+    \item Amit has either a dog or a cat $\equiv A(D+C)$
+    \item G = If Amit have problems falling a sleep, then Amit has no mice $\equiv AB \Rightarrow M \equiv (A'+B'+M)$
+\end{enumerate}
+We would like to check if it is possible to conclude that if Amit has problems falling asleep, then Amit has no mice.\\
+Let's start the algorithm, where KB=$((N'+D'+P) \land (C'+M') \land (N'+S'+D') \land A \land (D+C))$ and $\alpha =  (A'+B'+M)$\\
+
+\begin{enumerate}
+    \item we will define C = $KB \land \neg \alpha$
+    \item we will define new = $\emptyset$
+    \item forall $C_i, C_j$ in C:
+    \begin{enumerate}
+        \item $(N'+D'+P)(C'+M') \equiv C'N'+D'C'+PC'+N'M'+D'M'+PM'$
+        \item $(N'+D'+P)(N'+S'+D') \equiv N'N'+D'N'+PN'+N'S'+D'S'+PD'$
+        \item $(N'+D+P)(D+C) \equiv N'D+N'C+D+DC+PC$
+        \item $(N'+D'+P)A \equiv N'A+D'A+PA$
+        \item $(N'+D'+P)(A'+B'+M) \equiv N'A'+N'B'+N'M+D'A'+D'B'+D'M+PA'+PB'+PM$
+        \item $(C'+M')(N'+S'+D) \equiv C'N'+C'S'+C'D+M'N'+M'S'+M'D$
+        \item $(C'+M')A \equiv C'A + M'A$
+        \item $(C'+M')(D+C) \equiv C'D+C'C+M'D+M'C$
+        \item $(C'+M')(A'+B'+M) \equiv C'A'+C'B'+C'M+M'A'+M'B'+M'M$
+        \item $(N'+S'+D')A \equiv N'A+S'A+D'A $
+        \item $(N'+S'+D')(D+C) \equiv N'D+S'D+D'D+N'C+S'C+D'C $
+        \item $(N'+S'+D')(A'+B'+M) \equiv $
+        \item $A(D+C) \equiv AC+AD$
+        \item $A(A'+B'+M) \equiv AA'+AB'+AM$
+        \item $(D+C)(A'+B'+M)$
+    \end{enumerate}
+    \item new = $\{(N'+D'+P),(C'+M'),(N'+S'+D'),(D+C),A,(A'+B'+M)\}$
+    \item since new $\subset$ C
+    \item we will return false
+\end{enumerate}
 % Add problem 1 description and solution here
 
 \section{Problem 2}
