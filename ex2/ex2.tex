@@ -1,0 +1,59 @@
+\documentclass{article}
+
+\title{Assignment Title}
+\author{Your Name}
+\date{\today}
+\usepackage{amsmath} % for advanced math equations
+\usepackage{amssymb} % for additional math symbols
+\usepackage{amsfonts} % for math fonts
+\usepackage{mathtools} % for additional math tools
+\usepackage{amsthm} % for theorem environments
+\usepackage[margin=1.5cm]{geometry}
+\begin{document}
+
+\maketitle
+
+\section{CNF}
+\begin{tabular}{ccccccccc}
+    P & Q  & \neg Q & P \lor Q & P \land Q & \neg Q \lor P & \neg Q \land P & Q \Rightarrow P & P \iff Q\\
+    true&true&false&true&true&true&false&true&true\\
+    true&false&true&true&false&true&true&true&false\\
+    false&true&false&true&false&false&false&false&false\\
+    false&false&true&false&false&true&false&true&true\\
+\end{tabular}\\
+so we can conclude that:
+\begin{enumerate}
+    \item $Q \Rightarrow P \equiv \neg Q \lor P$
+    \item $Q \iff P \equiv P \Rightarrow Q \land P \Leftarrow Q $
+    \item $P \iff Q \equiv Q \Rightarrow P \land P \Rightarrow Q  \equiv (\neg Q \lor P) \land (\neg P \lor Q)$
+\end{enumerate}
+convert each of the following formulas to CNF:
+\begin{equation}
+    Q \Rightarrow P \equiv \neg Q \lor P
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        (P \Rightarrow \neg Q) \iff R &\overbrace{\equiv}^{\text{rule (2)}} (P \Rightarrow \neg Q) \Rightarrow R \land (P \Rightarrow \neg Q) \Leftarrow R\\
+        &\overbrace{\equiv}^{\text{rule (1)}} (\neg (P \Rightarrow \neg Q) \lor R ) \land (( P \Rightarrow \neg Q) \lor \neg R)\\
+        &\overbrace{\equiv}^{\text{rule (1)}} (\neg (\neg P \lor \neg Q) \lor R ) \land ((\neg P \lor \neg Q) \lor \neg R)\\
+        &\overbrace{\equiv}^{\text{De Morgan}} ((P \land Q) \lor R) \land (\neg P \lor \neg Q \lor \neg R)\\
+        &\overbrace{\equiv}^{\text{Distribution}} (P \lor R) \land ( Q \lor R) \land  (\neg P \lor \neg Q \lor \neg R)
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        (\neg (P \land \neg Q) \Rightarrow \neg R \lor \neg Q &\overbrace{\equiv}^{\text{rule (1)}} (\neg(\neg(P \land \neg Q)) \lor (\neg R \lor \neg Q))
+    \end{aligned}
+\end{equation}
+
+
+\section{Problem 1}
+% Add problem 1 description and solution here
+
+\section{Problem 2}
+% Add problem 2 description and solution here
+
+\section{Conclusion}
+% Add conclusion here
+
+\end{document}
