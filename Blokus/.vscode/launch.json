@@ -1,0 +1,112 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "BFS blokus",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+			"args": "python3 game.py -p tiny_set.txt -f bfs -s 4 7 -z fill"
+		},
+		{
+			"name": "BFS pacman",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "pacman.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": "-a fn=bfs"
+		},
+		{
+			"name": "DFS blokus",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+			"args": "-p tiny_set.txt -s 4 7 -z fill"
+		},
+		{
+			"name": "DFS pacman",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "pacman.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": "-a fn=dfs"
+		},
+		{
+			"name": "BFS Blokus Corners Problem",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": "-p tiny_set_2.txt -f bfs -s 6 6 -z corners"
+		},
+		{
+			"name": "Uniform Cost Search Blokus Corners Problem 6x6",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"args": "-p tiny_set_2.txt -f ucs -s 6 6 -z corners"
+		},
+		{
+			"name": "Uniform Cost Search Blokus Corners Problem 5x5",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"justMyCode": false,
+			"args": "-p small_set.txt -f ucs -s 5 5 -z corners"
+		},
+		{
+			"name": "A* Search null heuristic",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"justMyCode": false,
+			"args": "-p tiny_set_2.txt -f astar -s 6 6 -z corners -H null_heuristic"
+		},
+		{
+			"name": "A* Search Blokus Corners Heuristic",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"justMyCode": false,
+			"args": "-p tiny_set_2.txt -f astar -s 6 6 -z corners -H blokus_corners_heuristic"
+		},
+		{
+			"name": "A* Search Blokus Cover null Heuristic",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"justMyCode": false,
+			"args": " -p small_set.txt -f astar -s 6 6 -H null_heuristic -z cover -x 3 3 \"[(2,2),(5, 5), (1, 4)]\""
+		},
+		{
+			"name": "A* Search Blokus Cover Homemade Heuristic",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "game.py",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"justMyCode": false,
+			"args": "-p small_set.txt -f astar -s 10 10 -H blokus_cover_heuristic -z cover -x 3 3 \"[(2,2), (5, 5), (6, 7)]\""
+		}
+	]
+}
