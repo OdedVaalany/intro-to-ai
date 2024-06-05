@@ -123,56 +123,51 @@ according to the algorithm, we can cann't conclude that the Nitay carries an umb
 \subsection{}
 First we will define the following predicates:
 \begin{itemize}
-    \item $P$: Animal make sound
-    \item $N$: Night
-    \item $C$: Have a cat
-    \item $M$: Have a mouse
-    \item $D$: Have a dog
-    \item $S$: Have Problem with falling asleep
-    \item $A$: Amit have animal
+    \item $Z$: There is Noise
+    \item $N$: Its night 
+    \item $D$: Have dog 
+    \item $C$: Have cat
+    \item $M$: Have mice
+    \item $P$: Struggling to fall asleep
+    \item $A$: Amit 
 \end{itemize}
 So we can write the given statement as:
 \begin{enumerate}
-    \item All hounds (dogs) bark at night $\equiv ND \Rightarrow P \equiv ((ND)'+P) \equiv (N'+D'+P)$
-    \item If you have a cat, you don’t have mice $\equiv C \Rightarrow M' \equiv (C'+M')$
-    \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv NS \Rightarrow D' \equiv ((NS)'+D') \equiv (N'+S'+D')$
-    \item Amit has either a dog or a cat $\equiv A(D+C)$
-    \item G = If Amit have problems falling a sleep, then Amit has no mice $\equiv AB \Rightarrow M \equiv (A'+B'+M)$
+    \item All hounds (dogs) bark at night $\equiv (N \land D) \Rightarrow Z$
+    \item If you have a cat, you don’t have mice $\equiv C \Rightarrow \neg M$
+    \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv P \Rightarrow \neg (N\land Z)$
+    \item Amit has either a dog or a cat $\equiv A \Rightarrow (C\lor D)$
+    \item G = If Amit have problems falling a sleep, then Amit has no mice $ \equiv \neg M \lor \neg A \lor \neg P $
 \end{enumerate}
 We would like to check if it is possible to conclude that if Amit has problems falling asleep, then Amit has no mice.\\
-Let's start the algorithm, where KB=$((N'+D'+P) \land (C'+M') \land (N'+S'+D') \land A \land (D+C))$ and $\alpha =  (A'+B'+M)$\\
+Let's start the algorithm, where KB=$\{\overline N + \overline D + Z,\overline C + M,\overline P + N+Z, \overline A + C+D\}$ and $\alpha = \overline M + \overline A + \overline P$\\
 
 \begin{enumerate}
     \item we will define C = $KB \land \neg \alpha$
     \item we will define new = $\emptyset$
     \item forall $C_i, C_j$ in C:
     \begin{enumerate}
-        \item $(N'+D'+P)(C'+M') \equiv C'N'+D'C'+PC'+N'M'+D'M'+PM'$
-        \item $(N'+D'+P)(N'+S'+D') \equiv N'N'+D'N'+PN'+N'S'+D'S'+PD'$
-        \item $(N'+D+P)(D+C) \equiv N'D+N'C+D+DC+PC$
-        \item $(N'+D'+P)A \equiv N'A+D'A+PA$
-        \item $(N'+D'+P)(A'+B'+M) \equiv N'A'+N'B'+N'M+D'A'+D'B'+D'M+PA'+PB'+PM$
-        \item $(C'+M')(N'+S'+D) \equiv C'N'+C'S'+C'D+M'N'+M'S'+M'D$
-        \item $(C'+M')A \equiv C'A + M'A$
-        \item $(C'+M')(D+C) \equiv C'D+C'C+M'D+M'C$
-        \item $(C'+M')(A'+B'+M) \equiv C'A'+C'B'+C'M+M'A'+M'B'+M'M$
-        \item $(N'+S'+D')A \equiv N'A+S'A+D'A $
-        \item $(N'+S'+D')(D+C) \equiv N'D+S'D+D'D+N'C+S'C+D'C $
-        \item $(N'+S'+D')(A'+B'+M) \equiv $
-        \item $A(D+C) \equiv AC+AD$
-        \item $A(A'+B'+M) \equiv AA'+AB'+AM$
-        \item $(D+C)(A'+B'+M)$
+        \item $(\overline N + \overline D + Z)(\overline C + M)$ true when: $\overline N \cdot \overline C + \overline D\cdot \overline C + Z \overline C + \overline NM + \overline D M + ZM$
+        \item $(\overline N + \overline D + Z)(\overline P + N + Z)$ true when: $\overline N \cdot \overline P +\overline N N + \overline N Z + \overline D \cdot \overline P + \overline D N + \overline D Z + Z \overline P + ZN + ZZ$
+        \item $(\overline N + \overline D + Z)(\overline A + C + D)$ true when: $\overline N \cdot \overline A +\overline N C + \overline N D + \overline D  \cdot \overline A + \overline D C + \overline D D + Z \overline A + ZC + ZD$
+        \item $(\overline N + \overline D + Z)( M)$ true when: $\overline{N}\cdot  {M} +\overline D \cdot   M + Z \cdot  M$
+        \item $(\overline N + \overline D + Z)(A)$ true when: $\overline{N}\cdot  {A} +\overline D \cdot   A + Z \cdot  A$
+        \item $(\overline N + \overline D + Z)(P)$ true when: $\overline{N}\cdot  {P} +\overline D \cdot   P + Z \cdot  P$
+        \item $(\overline C + M)(\overline P + N + Z)$ true when: $\overline C \cdot \overline P + \overline C N + \overline C Z + M \overline P + M N +MZ$
+        \item $(\overline C + M)(\overline A + C+D)$ true when: $\overline C \cdot \overline A + \overline C C + \overline C D + M \overline A + MC+MD$
+        \item $(\overline C + M)(M)$ true when: $\overline C \cdot  M + MM$
+        \item $(\overline C + M)(A)$ true when: $\overline C \cdot  A + MA$
+        \item $(\overline C + M)(P)$ true when: $\overline C \cdot  P + MP$
+        \item $(\overline P + N + Z)(\overline A + C + D)$ true when: $\overline P \cdot \overline A + \overline P C + \overline P D + N + \overline A + NC +ND + Z\overline A + Z C + Z D$
+        \item $(\overline P + N + Z)(M)$ true when: $\overline P M + NM + ZM$
+        \item $(\overline P + N + Z)(A)$ true when: $\overline P A + NA + ZA$
+        \item $(\overline P + N + Z)(P)$ true when: $\overline P P + NP + ZP$
+        \item $(\overline A + C + D)(M)$ true when: $\overline A M + C M + D M$
+        \item $(\overline A + C + D)(A)$ true when: $\overline A A + C A + D A$
+        \item $(\overline A + C + D)(P)$ true when: $\overline A P + C P + D P$
     \end{enumerate}
-    \item new = $\{(N'+D'+P),(C'+M'),(N'+S'+D'),(D+C),A,(A'+B'+M)\}$
-    \item since new $\subset$ C
-    \item we will return false
+    \item new = $\{(\overline N + \overline D + Z), ( \overline C + M ),(\overline P + N + Z),(\overline A + C + D), M,A,P\}$
+    \item we got that new $\subset$ C so we return false
+    there is no condradiction between KB to "if Amit has problems falling asleep, then Amit has no mice".
 \end{enumerate}
-% Add problem 1 description and solution here
-
-\section{Problem 2}
-% Add problem 2 description and solution here
-
-\section{Conclusion}
-% Add conclusion here
-
 \end{document}
