@@ -92,33 +92,43 @@ So we can write the given statement as:
     \item G = $P$
 \end{enumerate}
 Now we can start the algorithm, where KB=$(\neg R \lor P) \land (\neg P \lor W) \land (R \lor W) \land W$ and $\alpha =  P$\\
-(for the sake of simplicity we will use the following notation: $Q \lor P = Q+P$ and $\neg Q = Q' $ and $Q \land P = QP$)
 \begin{enumerate}
-    \item we will define C = $KB \land \neg P$ 
+    \item we will define C = $KB \land \neg P \equiv \{(\overline R + P),(\overline P + W),(R + W),W,\overline P\}$ 
     \item we will define new = $\emptyset$
-    \item forall $C_i, C_j$ in C:
+    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
     \begin{enumerate}
-        \item $(R'+P)(P'+W) = P'P+P'R' = P'R'$
-        \item $(R'+P)(R+W) \equiv PR+PW+R'W$ 
-        \item $(R'+P)(W) \equiv WR'+PW$ 
-        \item $(R'+P)(P') \equiv P'R'+PP'\equiv R'P'$ 
-        \item $(P'+W)(R+W) \equiv W+RP' $ 
-        \item $(P'+W)(W) \equiv  P'W+W$ 
-        \item $(P'+W)(P') \equiv P'+P'W $ 
-        \item $(R+W)(W) \equiv RW+W $ 
-        \item $(R+W)(P') \equiv P'R+WP'$ 
-        \item $WP'$
+        \item $(\overline R + P)(\overline P + W)$ Resolution: $\overline R + W$
+        \item $(\overline R + P)(R + W)$ Resolution: $\overline P + W$
+        \item $(\overline R + P)(\overline P)$ Resolution: $\overline R$
     \end{enumerate}
-    \item new = $\{P',R,(R'+P),(R+W),W,R',P',(P'+W)\}$
+    \item new = $\{(\overline P + W ),(\overline R + W),(\overline R)\}$
     \item new $\not\subset$ C
-    \item C = C $\cup$ new
+    \item C = C $\cup$ new $\equiv \{(\overline R + P) , (R + W), W,(\overline P + W ),(\overline R + W),(\overline R), \overline P\}$
     \item forall $C_i, C_j$ in C:
     \begin{enumerate}
-        \item $R'R \equiv \emptyset$
-        \item since we got an empty clause will return true
+        \item $(\overline R + P)(R + W)$ Resolution: $P+W $
+        \item $(\overline R + P)(\overline P + W)$ Resolution: $\overline R +W $
+        \item $(\overline R + P)(\overline P) $ Resolution: $\overline R$
+        \item $(R+W)(\overline R + W)$ Resolution: $W$
+        \item $(R+W)(\overline R)$ Resolution: $W$
     \end{enumerate}
+    \item new = $\{(P+W),(\overline R + W),\overline R ,W\}$
+    \item new $\not\subset$ C
+    \item C = C $\cup$ new $\equiv \{(P+W),(\overline R + P) , (R + W), W,(\overline P + W ),(\overline R + W),(\overline R), \overline P\}$
+    \item for all $C_i, C_j$ in C:
+    \begin{enumerate}
+        \item $(P+W)(\overline P + W)$ Resolution: $W$
+        \item $(P+W)\overline P$ Resolution: $W$
+        \item $(\overline R + P)(R + W)$ Resolution: $P+W $
+        \item $(\overline R + P)(\overline P + W)$ Resolution: $\overline R +W $
+        \item $(\overline R + P)(\overline P) $ Resolution: $\overline R$
+        \item $(R+W)(\overline R + W)$ Resolution: $W$
+        \item $(R+W)(\overline R)$ Resolution: $W$
+    \end{enumerate}
+    \item new = $\{W,(P+W),(\overline R + W),\overline R\}$
+    \item since new $\subset$ C we will return false
 \end{enumerate}
-according to the algorithm, we can cann't conclude that the Nitay carries an umbrella.
+We dosn't recived a contradiction, so we can conclude that Nitay carries an umbrella.
 
 \subsection{}
 First we will define the following predicates:
@@ -137,37 +147,121 @@ So we can write the given statement as:
     \item If you have a cat, you don’t have mice $\equiv C \Rightarrow \neg M$
     \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv P \Rightarrow \neg (N\land Z)$
     \item Amit has either a dog or a cat $\equiv A \Rightarrow (C\lor D)$
-    \item G = If Amit have problems falling a sleep, then Amit has no mice $ \equiv \neg M \lor \neg A \lor \neg P $
+    \item G = If Amit have problems falling a sleep, then Amit has no mice $ \equiv A \land P \Rightarrow \neg (M \land A) \equiv \neg M \lor \neg A \lor \neg P $
 \end{enumerate}
-We would like to check if it is possible to conclude that if Amit has problems falling asleep, then Amit has no mice.\\
-Let's start the algorithm, where KB=$\{\overline N + \overline D + Z,\overline C + M,\overline P + N+Z, \overline A + C+D\}$ and $\alpha = \overline M + \overline A + \overline P$\\
-
+Now we can start the algorithm, where KB=$\{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D)\}$ and $\alpha = \overline M +\overline A + \overline P$\\
 \begin{enumerate}
-    \item we will define C = $KB \land \neg \alpha$
+    \item we will define C = $KB \land \neg \alpha \equiv \{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D),M,A,P\}$
     \item we will define new = $\emptyset$
+    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
+    \begin{enumerate}
+        \item $(\overline N +\overline D + Z)(\overline P + \overline N + \overline Z)$ Resolution: $\overline N + \overline D + \overline P $
+        \item $(\overline N +\overline D + Z)(\overline A + C +D)$ Resolution: $\overline N + \overline A + C + Z$
+        \item $(\overline C + \overline M)(\overline A + C + D)$ Resolution: $\overline M + \overline A +D$
+        \item $(\overline C + \overline M)M$ Resolution: $ \overline C$
+        \item $(\overline P + \overline N + \overline Z)(P)$ Resolution: $\overline N + \overline Z$
+        \item $(\overline A + C +D)(A)$ Resolution: $C + D$
+    \end{enumerate}
+    \item we have new = $\{\overline N + \overline D + \overline P , \overline N + \overline A + C + Z,  \overline M + \overline A + D, \overline C, \overline N + \overline Z, C + D\}$
+    \item new $\not\subset$ C
+    \item C = C $\cup$ new $\equiv \{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D),M,A,P,(\overline N + \overline D + \overline P), (\overline N + \overline A + Z + C), (\overline M + \overline A + D), \overline C, (\overline N + \overline Z), (C + D)\}$
     \item forall $C_i, C_j$ in C:
     \begin{enumerate}
-        \item $(\overline N + \overline D + Z)(\overline C + M)$ true when: $\overline N \cdot \overline C + \overline D\cdot \overline C + Z \overline C + \overline NM + \overline D M + ZM$
-        \item $(\overline N + \overline D + Z)(\overline P + N + Z)$ true when: $\overline N \cdot \overline P +\overline N N + \overline N Z + \overline D \cdot \overline P + \overline D N + \overline D Z + Z \overline P + ZN + ZZ$
-        \item $(\overline N + \overline D + Z)(\overline A + C + D)$ true when: $\overline N \cdot \overline A +\overline N C + \overline N D + \overline D  \cdot \overline A + \overline D C + \overline D D + Z \overline A + ZC + ZD$
-        \item $(\overline N + \overline D + Z)( M)$ true when: $\overline{N}\cdot  {M} +\overline D \cdot   M + Z \cdot  M$
-        \item $(\overline N + \overline D + Z)(A)$ true when: $\overline{N}\cdot  {A} +\overline D \cdot   A + Z \cdot  A$
-        \item $(\overline N + \overline D + Z)(P)$ true when: $\overline{N}\cdot  {P} +\overline D \cdot   P + Z \cdot  P$
-        \item $(\overline C + M)(\overline P + N + Z)$ true when: $\overline C \cdot \overline P + \overline C N + \overline C Z + M \overline P + M N +MZ$
-        \item $(\overline C + M)(\overline A + C+D)$ true when: $\overline C \cdot \overline A + \overline C C + \overline C D + M \overline A + MC+MD$
-        \item $(\overline C + M)(M)$ true when: $\overline C \cdot  M + MM$
-        \item $(\overline C + M)(A)$ true when: $\overline C \cdot  A + MA$
-        \item $(\overline C + M)(P)$ true when: $\overline C \cdot  P + MP$
-        \item $(\overline P + N + Z)(\overline A + C + D)$ true when: $\overline P \cdot \overline A + \overline P C + \overline P D + N + \overline A + NC +ND + Z\overline A + Z C + Z D$
-        \item $(\overline P + N + Z)(M)$ true when: $\overline P M + NM + ZM$
-        \item $(\overline P + N + Z)(A)$ true when: $\overline P A + NA + ZA$
-        \item $(\overline P + N + Z)(P)$ true when: $\overline P P + NP + ZP$
-        \item $(\overline A + C + D)(M)$ true when: $\overline A M + C M + D M$
-        \item $(\overline A + C + D)(A)$ true when: $\overline A A + C A + D A$
-        \item $(\overline A + C + D)(P)$ true when: $\overline A P + C P + D P$
+        \item $(\overline N + \overline D + Z )(\overline M + \overline A + D)$ Resolution: $\overline N + Z + \overline M + \overline A$
+        \item $(\overline N + \overline D + Z )(C+D)$ Resolution: $\overline N + Z + C $
+        \item $(\overline N + \overline D + Z )(\overline N + \overline Z)$ Resolution: $\overline N + \overline D$
+        \item $(\overline C + \overline M)(\overline N + \overline A + Z + C)$ Resolution: $\overline M + \overline A + Z+ \overline N$
+        \item $(\overline C + \overline M)(C+D)$ Resolution: $\overline M + D$
+        \item $(\overline P + \overline N + \overline Z)(\overline N + \overline A + Z +C)$ Resolution: $\overline P + \overline N + \overline A + C$
+        \item $(\overline A + C + D)(\overline N + \overline D + \overline P)$ Resolution: $\overline A + C + \overline N + \overline P$
+        \item $(\overline A + C + D) \overline C$ Resolution: $\overline A + D$
+        \item $M(\overline M + \overline A + D)$ Resolution: $\overline A + D$
+        \item $A(\overline N + \overline A + Z + C)$ Resolution: $\overline N +Z +C$
+        \item $A(\overline A + \overline M + D) $ Resolution: $\overline M + D$
+        \item $P(\overline N + \overline D + \overline P)$ Resolution: $\overline N + \overline D$
+        \item $(\overline N + \overline D + \overline P)(\overline M + \overline A + D)$ Resolution: $\overline N + \overline M + \overline P + \overline A$
+        \item $(\overline N + \overline D + \overline P)(C+D)$ Resolution: $ \overline N + \overline P + C$
+        \item $(\overline N + \overline A + Z + C)(\overline C)$ Resolution: $\overline N + \overline A + Z$
+        \item $(\overline N + \overline A + Z + C)(\overline N + \overline Z)$ Resolution: $ \overline N + \overline A + C$
+        \item $(\overline C)(C+D)$ Resolution: $D$
     \end{enumerate}
-    \item new = $\{(\overline N + \overline D + Z), ( \overline C + M ),(\overline P + N + Z),(\overline A + C + D), M,A,P\}$
-    \item we got that new $\subset$ C so we return false
-    there is no condradiction between KB to "if Amit has problems falling asleep, then Amit has no mice".
+    \item new = $\{(\overline N + Z + \overline M + \overline A),(\overline N + Z + C),(\overline N + \overline D),(\overline M + D),(\overline P + \overline N + \overline A + C),\}$
 \end{enumerate}
+
+\subsection{}
+First we will define the following predicates:
+\begin{itemize}
+    \item $Z$: animals that make noise at night
+    \item $N$: Its night 
+    \item $D$: Have dog 
+    \item $C$: Have cat
+    \item $M$: Have mice
+    \item $P$: Struggling to fall asleep
+    \item $A$: Amit 
+\end{itemize}
+So we can write the given statement as:
+\begin{enumerate}
+    \item All hounds (dogs) bark at night $\equiv D \Rightarrow Z$
+    \item If you have a cat, you don’t have mice $\equiv C \Rightarrow \neg M$
+    \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv P \Rightarrow \neg Z$
+    \item Amit has either a dog or a cat $A(C\lor D)$
+    \item G = If Amit have problems falling a sleep, then Amit has no mice $ \equiv A \land P \Rightarrow \neg M \land A \equiv \neg A + \neg P + \neg M $
+\end{enumerate}
+Now we can start the algorithm, where KB=$\{(\overline D + Z),(\overline  C + \overline  M),( \overline  P + \overline  Z),A,(C + D)\}$ and $\alpha = \neg M \lor \neg A \lor \neg P$\\
+\begin{enumerate}
+    \item we will define C = $KB \land \neg \alpha \equiv \{(\overline D + Z),(\overline  C + \overline  M),( \overline  P + \overline  Z),A,(C + D),M,P\}$
+    \item new = $\emptyset$
+    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
+    \begin{enumerate}
+        \item $(\overline D + Z)(\overline P + \overline Z)$ Resolution: $\overline D + \overline P$
+        \item $(\overline D + Z)(C + D)$ Resolution: $Z + C$
+        \item $(\overline C + \overline  M)(C+D)$ Resolution: $\overline  M + P$ 
+        \item $(\overline C + \overline  M)(M)$ Resolution: $\overline  C$ 
+        \item $(\overline P + \overline Z)P$ Resolution: $\overline Z$
+    \end{enumerate}
+    \item new = $\{\overline D + \overline P, Z + C, \overline M + P, \overline C, \overline Z\}$
+    \item new $\not\subset$ C
+    \item C = C $\cup$ new $\equiv \{(\overline D + Z),(\overline  C + \overline  M),( \overline  P + \overline  Z),A,(C + D),M,P,(\overline D + \overline P), (Z + C), (\overline M + P), \overline C, \overline Z\}$
+    \item new = $\emptyset$
+    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
+    \begin{enumerate}
+        \item $(\overline D + Z)(\overline Z)$ Resolution: $\overline D$
+        \item $(\overline C + \overline M)(Z+C)$ Resolution $\overline M + Z$
+        \item $(\overline P + \overline Z)(Z+C)$ Resolution: $\overline P + C$
+        \item $(\overline P + \overline Z)(\overline M + P)$ Resolution: $\overline Z + \overline M$
+        \item $(C+D)(\overline D + \overline P)$ Resolution: $C + \overline P$
+        \item $(C+D)\overline C$ Resolution: $D$
+        \item $(M)(\overline M + P)$ Resolution: $P$
+        \item $P(\overline D + \overline P)$ Resolution: $\overline D$
+        \item $(\overline D + \overline P)(\overline M + P)$ Resolution: $\overline D + \overline M $
+        \item $(Z+C)\overline Z$ Resolution: $C$
+        \item $(Z+C)\overline C$ Resolution: $Z$
+    \end{enumerate}
+    \item new = $\{(\overline M + Z), (\overline P + C), (\overline Z + \overline M), (C + \overline P), D, P, \overline D, (\overline D + \overline M), C, Z\}$
+    \item new $\not\subset$ C
+    \item C = C $\cup$ new 
+    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
+    \begin{enumerate}
+        \item $\overline D \cdot D$ Resolution: $\emptyset$
+        \item we will return True
+    \end{enumerate}
+\end{enumerate}
+We received a contradiction, so we can conclude that if Amit has problems to sleep at night so amit has no mice.
+
+
+\section{DPLL Algorithm}
+given the following CNF formula: $(\overline A +B)(\overline C + D)(\overline E + \overline F)(F + \overline E + B)$\\
+\includegraphics[width=0.8\textwidth]{DPLL.jpg}\\
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{DPLL.jpg}
+%     \caption{Our hand written DPLL algorithm}
+%     \label{fig:your_image}
+% \end{figure}\\
+
+We can see that the algorithm is working correctly and we can conclude that the formula is satisfiable.
+One of the optional Models is: $B = Ture \land C = False \land A = False \land E = False \land F = True$\\
+- If on the Third call we could define E as a pure symbol, we could have finished the algorithm in 3 steps.
+
+
 \end{document}
