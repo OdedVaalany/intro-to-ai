@@ -1,7 +1,7 @@
 \documentclass{article}
 
-\title{Assignment Title}
-\author{Your Name}
+\title{Intro To Artificial Intelligence - Exercise 2}
+\author{Eran Ston and Oded Vaalany}
 \date{\today}
 \usepackage{amsmath} % for advanced math equations
 \usepackage{amssymb} % for additional math symbols
@@ -129,64 +129,6 @@ Now we can start the algorithm, where KB=$(\neg R \lor P) \land (\neg P \lor W) 
     \item since new $\subset$ C we will return false
 \end{enumerate}
 We dosn't recived a contradiction, so we can conclude that Nitay carries an umbrella.
-
-\subsection{}
-First we will define the following predicates:
-\begin{itemize}
-    \item $Z$: There is Noise
-    \item $N$: Its night 
-    \item $D$: Have dog 
-    \item $C$: Have cat
-    \item $M$: Have mice
-    \item $P$: Struggling to fall asleep
-    \item $A$: Amit 
-\end{itemize}
-So we can write the given statement as:
-\begin{enumerate}
-    \item All hounds (dogs) bark at night $\equiv (N \land D) \Rightarrow Z$
-    \item If you have a cat, you don’t have mice $\equiv C \Rightarrow \neg M$
-    \item If you have problems falling a sleep you don’t keep animals that make sound at night $\equiv P \Rightarrow \neg (N\land Z)$
-    \item Amit has either a dog or a cat $\equiv A \Rightarrow (C\lor D)$
-    \item G = If Amit have problems falling a sleep, then Amit has no mice $ \equiv A \land P \Rightarrow \neg (M \land A) \equiv \neg M \lor \neg A \lor \neg P $
-\end{enumerate}
-Now we can start the algorithm, where KB=$\{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D)\}$ and $\alpha = \overline M +\overline A + \overline P$\\
-\begin{enumerate}
-    \item we will define C = $KB \land \neg \alpha \equiv \{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D),M,A,P\}$
-    \item we will define new = $\emptyset$
-    \item forall $C_i, C_j$ in C: (we will write only paris that have a resolution)
-    \begin{enumerate}
-        \item $(\overline N +\overline D + Z)(\overline P + \overline N + \overline Z)$ Resolution: $\overline N + \overline D + \overline P $
-        \item $(\overline N +\overline D + Z)(\overline A + C +D)$ Resolution: $\overline N + \overline A + C + Z$
-        \item $(\overline C + \overline M)(\overline A + C + D)$ Resolution: $\overline M + \overline A +D$
-        \item $(\overline C + \overline M)M$ Resolution: $ \overline C$
-        \item $(\overline P + \overline N + \overline Z)(P)$ Resolution: $\overline N + \overline Z$
-        \item $(\overline A + C +D)(A)$ Resolution: $C + D$
-    \end{enumerate}
-    \item we have new = $\{\overline N + \overline D + \overline P , \overline N + \overline A + C + Z,  \overline M + \overline A + D, \overline C, \overline N + \overline Z, C + D\}$
-    \item new $\not\subset$ C
-    \item C = C $\cup$ new $\equiv \{(\overline N +\overline D + Z),(\overline C + \overline M),(\overline P + \overline N + \overline Z),(\overline A + C + D),M,A,P,(\overline N + \overline D + \overline P), (\overline N + \overline A + Z + C), (\overline M + \overline A + D), \overline C, (\overline N + \overline Z), (C + D)\}$
-    \item forall $C_i, C_j$ in C:
-    \begin{enumerate}
-        \item $(\overline N + \overline D + Z )(\overline M + \overline A + D)$ Resolution: $\overline N + Z + \overline M + \overline A$
-        \item $(\overline N + \overline D + Z )(C+D)$ Resolution: $\overline N + Z + C $
-        \item $(\overline N + \overline D + Z )(\overline N + \overline Z)$ Resolution: $\overline N + \overline D$
-        \item $(\overline C + \overline M)(\overline N + \overline A + Z + C)$ Resolution: $\overline M + \overline A + Z+ \overline N$
-        \item $(\overline C + \overline M)(C+D)$ Resolution: $\overline M + D$
-        \item $(\overline P + \overline N + \overline Z)(\overline N + \overline A + Z +C)$ Resolution: $\overline P + \overline N + \overline A + C$
-        \item $(\overline A + C + D)(\overline N + \overline D + \overline P)$ Resolution: $\overline A + C + \overline N + \overline P$
-        \item $(\overline A + C + D) \overline C$ Resolution: $\overline A + D$
-        \item $M(\overline M + \overline A + D)$ Resolution: $\overline A + D$
-        \item $A(\overline N + \overline A + Z + C)$ Resolution: $\overline N +Z +C$
-        \item $A(\overline A + \overline M + D) $ Resolution: $\overline M + D$
-        \item $P(\overline N + \overline D + \overline P)$ Resolution: $\overline N + \overline D$
-        \item $(\overline N + \overline D + \overline P)(\overline M + \overline A + D)$ Resolution: $\overline N + \overline M + \overline P + \overline A$
-        \item $(\overline N + \overline D + \overline P)(C+D)$ Resolution: $ \overline N + \overline P + C$
-        \item $(\overline N + \overline A + Z + C)(\overline C)$ Resolution: $\overline N + \overline A + Z$
-        \item $(\overline N + \overline A + Z + C)(\overline N + \overline Z)$ Resolution: $ \overline N + \overline A + C$
-        \item $(\overline C)(C+D)$ Resolution: $D$
-    \end{enumerate}
-    \item new = $\{(\overline N + Z + \overline M + \overline A),(\overline N + Z + C),(\overline N + \overline D),(\overline M + D),(\overline P + \overline N + \overline A + C),\}$
-\end{enumerate}
 
 \subsection{}
 First we will define the following predicates:
