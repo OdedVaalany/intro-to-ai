@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1717754591 "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.tex" "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.pdf" "ex2" 1717754609
-  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.aux" 1717754592 1571 48471eb8f0979b9e24b4e25a4c035825 ""
-  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.tex" 1717754609 15745 56f4f633c01fa1a21ac00cc1be054488 ""
+["pdflatex"] 1717852720 "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.tex" "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.pdf" "ex2" 1717852721
+  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.aux" 1717852721 1478 e003fc59918b779ade12270485bdc082 ""
+  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.tex" 1717852720 11133 5e2ec5847b0c59683150cf5ff383b83d ""
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -70,11 +70,11 @@
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1635602968 2724745 157bfd05ecb78e9e5f67bcfebb54df74 ""
   "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
   "DPLL.jpg" 1717752174 767639 108543814062f53caf0a99f9457f33c7 ""
-  "ex2.aux" 1717754592 1571 48471eb8f0979b9e24b4e25a4c035825 "pdflatex"
-  "ex2.tex" 1717754609 15745 56f4f633c01fa1a21ac00cc1be054488 ""
+  "ex2.aux" 1717852721 1478 e003fc59918b779ade12270485bdc082 "pdflatex"
+  "ex2.tex" 1717852720 11133 5e2ec5847b0c59683150cf5ff383b83d ""
   (generated)
   "ex2.pdf"
-  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.pdf"
+  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.log"
   "ex2.log"
   "ex2.aux"
-  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.log"
+  "/Users/odedvaalany/Developer/IntroToAI/ex2/ex2.pdf"
