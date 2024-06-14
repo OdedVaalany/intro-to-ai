@@ -66,7 +66,8 @@ class GameState(object):
         ok_to_move = board[:, 1:self._num_of_rows] == 0
         if np.any(np.logical_and(has_tile, ok_to_move)):
             return True
-        diff = board[:, 1:self._num_of_rows] - board[:, 0:self._num_of_rows - 1]
+        diff = board[:, 1:self._num_of_rows] - \
+            board[:, 0:self._num_of_rows - 1]
         return np.any(np.logical_and(has_tile, diff == 0))
 
     def get_empty_tiles(self):
@@ -74,7 +75,8 @@ class GameState(object):
 
     def apply_opponent_action(self, action):
         if self._board[action.row, action.column] != 0:
-            raise Exception("illegal opponent action (%s,%s) isn't empty." % (action.row, action.column))
+            raise Exception("illegal opponent action (%s,%s) isn't empty." % (
+                action.row, action.column))
         if action.value <= 0:
             raise Exception("The action value must be positive integer.")
         self._board[action.row, action.column] = action.value

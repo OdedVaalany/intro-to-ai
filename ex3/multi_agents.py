@@ -2,6 +2,7 @@ import numpy as np
 import abc
 import util
 from game import Agent, Action
+from math import exp
 
 
 class ReflexAgent(Agent):
@@ -27,10 +28,13 @@ class ReflexAgent(Agent):
         legal_moves = game_state.get_agent_legal_actions()
 
         # Choose one of the best actions
-        scores = [self.evaluation_function(game_state, action) for action in legal_moves]
+        scores = [self.evaluation_function(
+            game_state, action) for action in legal_moves]
         best_score = max(scores)
-        best_indices = [index for index in range(len(scores)) if scores[index] == best_score]
-        chosen_index = np.random.choice(best_indices)  # Pick randomly among the best
+        best_indices = [index for index in range(
+            len(scores)) if scores[index] == best_score]
+        # Pick randomly among the best
+        chosen_index = np.random.choice(best_indices)
 
         "Add more of your code here if you want to"
 
@@ -47,12 +51,37 @@ class ReflexAgent(Agent):
 
         # Useful information you can extract from a GameState (game_state.py)
 
-        successor_game_state = current_game_state.generate_successor(action=action)
+        successor_game_state = current_game_state.generate_successor(
+            action=action)
         board = successor_game_state.board
         max_tile = successor_game_state.max_tile
+        max_tile_current = current_game_state.max_tile
         score = successor_game_state.score
+        score_currnet = current_game_state.score
+        nempty_current = len(
+            current_game_state.get_empty_tiles())
+        nempty_succenssor = len(successor_game_state.get_empty_tiles())
+        max_score = 0
+        for next_action in successor_game_state.get_agent_legal_actions():
+            temp_state = successor_game_state.generate_successor(
+                action=next_action)
+            if temp_state.score > max_score:
+                max_score = temp_state.score
+        return max_score
+        # return (score - socre_currnet) + max_tile - max_tile_current + (nempty_succenssor - nempty_current)*10
+        # if max_tile != max_tile_current:
+        #     return max_tile
+        # return (score - socre_currnet)
+        # + 4**(num_of_empty_tiles_successor*(max_tile > 32))
+        # if (nempty_current > nempty_succenssor or (max_tile < 8)):
+        #     if action in [Action.RIGHT, Action.DOWN]:
+        #         return float('inf')
+        #     else:
+        #         return 0
+        # return score
 
-        "*** YOUR CODE HERE ***"
+        if (score - score_currnet) < 16:
+            return nempty_succenssor
         return score
 
 
@@ -86,7 +115,7 @@ class MultiAgentSearchAgent(Agent):
         self.evaluation_function = util.lookup(evaluation_function, globals())
         self.depth = depth
 
-    @abc.abstractmethod
+    @ abc.abstractmethod
     def get_action(self, game_state):
         return
 
@@ -109,9 +138,20 @@ class MinmaxAgent(MultiAgentSearchAgent):
         game_state.generate_successor(agent_index, action):
             Returns the successor game state after an agent takes an action
         """
-        """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        leagl_actions = game_state.get_legal_actions(0)
+        arr = [(action, self.__min_max_value(game_state.generate_successor(
+            0, action), 2*self.depth - 1, True)) for action in leagl_actions]
+        return max(arr, key=lambda x: x[1])[0]
 
+    def __min_max_value(self, game_state, depth, is_min=True):
+        if depth == 0 or game_state.done:
+            return self.evaluation_function(game_state)
+        leagl_actions = game_state.get_legal_actions(is_min)
+        arr = [self.__min_max_value(game_state.generate_successor(
+            is_min, action), depth - 1, not is_min) for action in leagl_actions]
+        if is_min:
+            return min(arr)
+        return max(arr)
 
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
@@ -125,7 +165,6 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         """
         """*** YOUR CODE HERE ***"""
         util.raiseNotDefined()
-
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -142,9 +181,6 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         """
         """*** YOUR CODE HERE ***"""
         util.raiseNotDefined()
-
-
-
 
 
 def better_evaluation_function(current_game_state):
