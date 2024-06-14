@@ -164,7 +164,43 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        leagl_actions = game_state.get_legal_actions(0)
+        alpha = float('-inf')
+        beta = float('inf')
+        best_action = None
+        for action in leagl_actions:
+            v = self.__min_helper(game_state.generate_successor(
+                0, action), 2*self.depth - 1, alpha, beta)
+            if alpha < v:
+                alpha = v
+                best_action = action
+        return best_action
+
+    def __max_helper(self, game_state, depth, alpha, beta):
+        if depth == 0 or game_state.done:
+            return self.evaluation_function(game_state)
+        leagl_actions = game_state.get_legal_actions(0)
+        v = float('-inf')
+        for action in leagl_actions:
+            v = max(v, self.__min_helper(
+                game_state.generate_successor(0, action), depth - 1, alpha, beta))
+            if v >= beta:
+                return v
+            alpha = max(alpha, v)
+        return v
+
+    def __min_helper(self, game_state, depth, alpha, beta):
+        if depth == 0 or game_state.done:
+            return self.evaluation_function(game_state)
+        leagl_actions = game_state.get_legal_actions(1)
+        v = float('inf')
+        for action in leagl_actions:
+            v = min(v, self.__max_helper(
+                game_state.generate_successor(1, action), depth - 1, alpha, beta))
+            if v <= alpha:
+                return v
+            beta = min(beta, v)
+        return v
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -180,7 +216,36 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         """*** YOUR CODE HERE ***"""
-        util.raiseNotDefined()
+        leagl_actions = game_state.get_legal_actions(0)
+        best_action = None
+        alpha = float('-inf')
+        for action in leagl_actions:
+            v = self.__expect_helper(game_state.generate_successor(
+                0, action), 2*self.depth - 1)
+            if alpha < v:
+                alpha = v
+                best_action = action
+        return best_action
+
+    def __max_helper(self, game_state, depth):
+        if depth == 0 or game_state.done:
+            return self.evaluation_function(game_state)
+        leagl_actions = game_state.get_legal_actions(0)
+        v = float('-inf')
+        for action in leagl_actions:
+            v = max(v, self.__expect_helper(
+                game_state.generate_successor(0, action), depth - 1))
+        return v
+
+    def __expect_helper(self, game_state, depth):
+        if depth == 0 or game_state.done:
+            return self.evaluation_function(game_state)
+        leagl_actions = game_state.get_legal_actions(1)
+        v = 0
+        for action in leagl_actions:
+            v += self.__max_helper(
+                game_state.generate_successor(1, action), depth - 1)
+        return v/len(leagl_actions)
 
 
 def better_evaluation_function(current_game_state):
@@ -190,7 +255,22 @@ def better_evaluation_function(current_game_state):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    # return current_game_state.score + np.exp(len(current_game_state.get_empty_tiles())) + current_game_state.max_tile
+    # currently best
+
+    # features = np.array([current_game_state.score, len(current_game_state.get_empty_tiles()), current_game_state.max_tile,
+    #                      current_game_state.board[0][0], current_game_state.board[0][
+    #                          3], current_game_state.board[3][0], current_game_state.board[3][3],
+    #                     current_game_state.board[0][1], current_game_state.board[1][0]])
+    # weights = np.array([8, 4, 2, 3, 0, 0, 0, 1, 1])  # 20
+
+    features = current_game_state.board.flatten()
+    weights = np.array([[0, 0, 1024, 2048],
+                        [0, 0, 1024, 1024],
+                        [0, 0, 0, 0],
+                        [0, 0, 0, 0]]).flatten()
+    return np.dot(features, weights) + current_game_state.score
+    # return current_game_state.score + len(current_game_state.get_empty_tiles())
 
 
 # Abbreviation
