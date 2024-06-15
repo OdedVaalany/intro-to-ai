@@ -247,6 +247,20 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 game_state.generate_successor(1, action), depth - 1)
         return v/len(leagl_actions)
 
+weights = np.array([[24, 26, 28, 30],
+                    [22, 20, 18, 16],
+                    [8, 10, 12, 14],
+                    [6, 4, 2, 1]]).flatten()
+weights2 = np.array([[1, 14, 16, 30],
+                    [2, 12, 18, 28],
+                    [4, 10, 20, 26],
+                    [6, 8, 22, 24]]).flatten()
+weights3 = np.rot90(weights.reshape(4, 4), k=1).flatten()
+weights4 = np.rot90(weights2.reshape(4, 4), k=1).flatten()
+weights5 = np.rot90(weights3.reshape(4, 4), k=1).flatten()
+weights6 = np.rot90(weights4.reshape(4, 4), k=1).flatten()
+weights7 = np.rot90(weights5.reshape(4, 4), k=1).flatten()
+weights8 = np.rot90(weights6.reshape(4, 4), k=1).flatten()
 
 def better_evaluation_function(current_game_state):
     """
@@ -263,13 +277,13 @@ def better_evaluation_function(current_game_state):
     #                          3], current_game_state.board[3][0], current_game_state.board[3][3],
     #                     current_game_state.board[0][1], current_game_state.board[1][0]])
     # weights = np.array([8, 4, 2, 3, 0, 0, 0, 1, 1])  # 20
-
+    
     features = current_game_state.board.flatten()
-    weights = np.array([[0, 0, 1024, 2048],
-                        [0, 0, 1024, 1024],
-                        [0, 0, 0, 0],
-                        [0, 0, 0, 0]]).flatten()
-    return np.dot(features, weights) + current_game_state.score
+    max_value = max(np.dot(features, weights),np.dot(features, weights2),np.dot(features, weights3),
+                np.dot(features, weights4),np.dot(features, weights5),np.dot(features, weights6),
+                np.dot(features, weights7),np.dot(features, weights8))
+
+    return max_value + current_game_state.score
     # return current_game_state.score + len(current_game_state.get_empty_tiles())
 
 
