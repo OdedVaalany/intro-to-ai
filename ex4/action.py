@@ -12,7 +12,8 @@ class Action(object):
         """
         self.pre = pre  # list of the precondition propositions
         self.add = add  # list of the propositions that will be added after applying the action
-        self.delete = delete  # list of the propositions that will be deleted after applying the action
+        # list of the propositions that will be deleted after applying the action
+        self.delete = delete
         self.name = name  # the name of the action as string
         self.noOp = is_noop  # true if the action is a noOp
 
