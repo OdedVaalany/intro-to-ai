@@ -128,7 +128,6 @@ def max_level(state, planning_problem):
         graph.append(PlanGraphLevel())
         graph[level + 1].expand_without_mutex(graph[level])
         level += 1
-    print(level)
     return level
 
 
