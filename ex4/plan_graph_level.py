@@ -10,7 +10,8 @@ class PlanGraphLevel(object):
     For each level i, the PlanGraphLevel consists of the actionLayer and propositionLayer at this level in this order!
     """
     independent_actions = set(
-    )  # updated to the independent_actions of the problem (graph_plan.py line 32)
+        # updated to the independent_actions of the problem (graph_plan.py line 32)
+    )
     # updated to the actions of the problem (graph_plan.py line 33 and planning_problem.py line 36)
     actions = []
     # updated to the propositions of the problem (graph_plan.py line 34 and planning_problem.py line 36)
@@ -145,8 +146,9 @@ class PlanGraphLevel(object):
         Questions 11 and 12
         You don't have to use this function
         """
-        previous_layer_proposition = previous_layer.get_proposition_layer()
-        "*** YOUR CODE HERE ***"
+        previous_proposition_layer = previous_layer.get_proposition_layer()
+        self.update_action_layer(previous_proposition_layer)
+        self.update_proposition_layer()
 
 
 def mutex_actions(a1, a2, mutex_props):
