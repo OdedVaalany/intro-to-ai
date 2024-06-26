@@ -3,7 +3,8 @@ import sys
 
 
 def format_action(name: str, pre: str, add: str, delete: str):
-    return f"Name: {name}\npre: {" ".join(pre)} \nadd: {" ".join(add)}\ndelete: {" ".join(delete)}\n"
+    print(name)
+    return f"Name: {name}\npre: {' '.join(pre)} \nadd: {' '.join(add)}\ndelete: {' '.join(delete)}\n"
 
 
 # def get_sub_orders_helper(seq: List[str], conrainer: Dict[str, List[str]] = dict()):
@@ -41,7 +42,7 @@ def format_action(name: str, pre: str, add: str, delete: str):
 #         for sl in all_sub_lists:
 #             propositions += ["_".join([src_peg] + [f'd_{s}' for s in sl])]
 
-#     domain_file.write(" ".join(propositions)+"\n")
+#     domain_file.write(' '.join(propositions)+"\n")
 #     domain_file.write("Actions:\n")
 
 #     for src_peg in pegs:
@@ -68,9 +69,9 @@ def format_action(name: str, pre: str, add: str, delete: str):
 #     # use problem_file.write(str) to write to problem_file
 #     problem_file = open(problem_file_name_, 'w')
 #     problem_file.write(f"Initial state: {"_".join(
-#         [pegs[0]]+disks[::-1])} {" ".join(pegs[1:])}\n")
+#         [pegs[0]]+disks[::-1])} {' '.join(pegs[1:])}\n")
 #     problem_file.write(f"Goal state: {"_".join(
-#         [pegs[-1]]+disks[::-1])} {" ".join(pegs[:-1])}\n")
+#         [pegs[-1]]+disks[::-1])} {' '.join(pegs[:-1])}\n")
 
 # problem_file.close()
 
@@ -94,7 +95,7 @@ def create_domain_file(domain_file_name, n_, m_):
         for disk in disks+[""]:
             propositions += [make_prop(peg, disk)]
 
-    domain_file.write(" ".join(propositions) + "\n")
+    domain_file.write(' '.join(propositions) + "\n")
     domain_file.write("Actions:\n")
     actions = ""
     for i in range(n_):
@@ -155,12 +156,14 @@ def create_problem_file(problem_file_name_, n_, m_):
     for i in range(n_-1):
         hip += [make_prop(disks[i+1], disks[i])]
     hip += [make_prop(disks[0], "")]
-    hip = " ".join(hip)
+    hip = ' '.join(hip)
 
-    problem_file.write(f"Initial state: {
-                       make_prop(pegs[0], disks[-1])} {hip} {" ".join([make_prop(peg, "") for peg in pegs[1:]])}\n")
-    problem_file.write(f"Goal state: {
-                       make_prop(pegs[-1], disks[-1])} {hip} {" ".join([make_prop(peg, "") for peg in pegs[:-1]])}\n")
+    p_for_initial = [make_prop(peg, "") for peg in pegs[1:]]
+    problem_file.write(
+        f"Initial state: {make_prop(pegs[0], disks[-1])} {hip} {' '.join(p_for_initial)}\n")
+    p_for_goal = [make_prop(peg, "") for peg in pegs[:-1]]
+    problem_file.write(
+        f"Goal state: {make_prop(pegs[-1], disks[-1])} {hip} {' '.join(p_for_goal)}\n")
 
 
 if __name__ == '__main__':
