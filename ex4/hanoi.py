@@ -3,7 +3,6 @@ import sys
 
 
 def format_action(name: str, pre: str, add: str, delete: str):
-    print(name)
     return f"Name: {name}\npre: {' '.join(pre)} \nadd: {' '.join(add)}\ndelete: {' '.join(delete)}\n"
 
 
@@ -179,4 +178,3 @@ if __name__ == '__main__':
 
     create_domain_file(domain_file_name, n, m)
     create_problem_file(problem_file_name, n, m)
-    print(f"python3 graph_plan.py {domain_file_name} {problem_file_name}")

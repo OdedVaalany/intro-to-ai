@@ -1,0 +1,2 @@
+Initial state: p_0_d_6 d_1_d_0 d_2_d_1 d_3_d_2 d_4_d_3 d_5_d_4 d_6_d_5 d_0_ p_1_ p_2_
+Goal state: p_2_d_6 d_1_d_0 d_2_d_1 d_3_d_2 d_4_d_3 d_5_d_4 d_6_d_5 d_0_ p_0_ p_1_
