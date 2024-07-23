@@ -148,5 +148,247 @@ Optimal actions after each iteration:\\
     The values of the optimal policy in the stochastic MDP are lower the values of the optimal policy in the deterministic MDP. This is because the stochastic MDP has a probability of transitioning to a state that is not the desired state, which causes the values to be lower.
 
     \subsection{}
-    Given the following policy: $ a_1 = \uparrow | a_2 = \rightarrow | a_3 = \uparrow |  a_4 = \uparrow | a_5 = * | a_6 = \uparrow | a_7 = * | a_8 = \leftarrow | a_9 = *  $\\
+    Given the following policy: $ a_1 = \uparrow \;\; a_2 = \rightarrow \;\; a_3 = \uparrow \;\;  a_4 = \uparrow \;\; a_5 = * \;\; a_6 = \uparrow \;\; a_7 = * \;\; a_8 = \leftarrow \;\; a_9 = *  $\\
+    So lets define the following Parameters:
+    \[
+    V = \begin{bmatrix} 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \end{bmatrix}^T
+    \]
+
+    \[
+    R = \begin{bmatrix} -0.05 & -0.05 & -0.05 & -0.05 & -10 & -0.05 & 15 & -0.05 & 30 \end{bmatrix}^T
+    \]
+
+    \[
+    P = \begin{bmatrix}
+        0 & 0.1 & 0 & 0.9 & 0 & 0 & 0 & 0 & 0\\
+        0.05 & 0 & 0.9 & 0 & 0.05 & 0 & 0 & 0 & 0\\
+        0 & 0.1 & 0 & 0 & 0 & 0.9 & 0 & 0 & 0\\
+        0.05 & 0 & 0 & 0 & 0.05 & 0 & 0.9 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0.05 & 0 & 0.05 & 0 & 0 & 0 & 0.9\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0.05 & 0 & 0.05 & 0 & 0.9\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+    \end{bmatrix}
+    \]
+
+    Using the following formula: $V = (I-\gamma[P])^-1R$ we can calculate the values of the state using the "excat" algorithm.\\
+    \[ \begin{bmatrix} 14.39238 & 24.09080 & 26.85003 & 13.53242 & -10.00000 & 27.51408 & 15.00000 & 26.92750 & 30.00000 \end{bmatrix}^T \]
+
+    The values of the states of the stochastic MDP:\\
+    \[ \begin{bmatrix} 23.01945 & 23.91210 & 26.81096 & 17.76457 & -10.00000 & 27.48951 & 15.00000 & 26.92750 & 30.00000 \end{bmatrix}^T \]
+
+    When comparing the two vectors, we can see how different policies can lead to different state values. In this case, the state values differ because the policies are different. For example, the value of state $s_1$ in the stochastic MDP is 23.01945, while under the given policy, it is 14.39238. This difference arises because the stochastic MDP finds a better policy for $s_1$, ultimately leading to a higher score, whereas the given policy is not optimal.
+
+    However, when looking at the values of $s_2$, the non-optimal policy appears to outperform the optimal policy from the stochastic MDP. This highlights the importance of the number of iterations. The stochastic algorithm first searches for a good policy wach iteration and only after achieving the optimal policy do the remaining iterations help it converge.
+
+    \section{POMDP}
+    \subsection{}
+
+    \begin{equation}{\text{calculate $P(TL)$ for d=1}}
+        \begin{split}
+            P(TL) &= \frac{P(GL|TL)P(TL)}{P(GL|TL)P(TL)+ P(GL|TR)P(TR)}\\
+            & = \frac{0.5P(GL|TL)}{0.5(P(GL|TL)+ P(GL|TR))}\\
+            & = \frac{0.45}{0.45+0.05} = 0.9
+        \end{split}
+    \end{equation}
+    
+    \begin{equation}{\text{calculate $P(TR)$ for d=1}}
+        \begin{split}
+            P(TR) &= \frac{P(GL|TR)P(TR)}{P(GL|TL)P(TR)+ P(GL|TR)P(TR)}\\
+            & = \frac{0.5P(GL|TR)}{0.5(P(GL|TL)+ P(GL|TR))}\\
+            & = \frac{0.1}{0.1+0.9} = 0.1
+        \end{split}
+    \end{equation}
+    
+    \begin{equation}{\text{calculate $P(TL)$ for d=2}}
+        \begin{split}
+            P(TL) &= \frac{P(GL|TL)P(TL)}{P(GL|TL)P(TL)+ P(GL|TR)P(TR)}\\
+            & = \frac{0.5P(GL|TL)}{0.5(P(GL|TL)+ P(GL|TR))}\\
+            & = \frac{0.6}{0.6+0.4} = 0.6
+        \end{split}
+    \end{equation}
+    
+    \begin{equation}{\text{calculate $P(TR)$ for d=2}}
+        \begin{split}
+            P(TR) &= \frac{P(GL|TR)P(TR)}{P(GL|TL)P(TL)+ P(GL|TR)P(TR)}\\
+            & = \frac{0.5P(GL|TR)}{0.5(P(GL|TL)+ P(GL|TR))}\\
+            & = \frac{0.4}{0.6+0.4} = 0.4
+        \end{split}
+    \end{equation}
+
+    Finally we can write when d=1: $< 0.9 |0.1>$ and when d=2: $<0.6 | 0.4 >$
+    
+    \subsection{}
+    Since we konw the probabilities after hearing a roar from the left. We can calculate the probability of the tiger being on the left side. donate the probability to be close to door as $p$ (means d=1)\\
+    \[
+    P(TL) = p \cdot P(TL,d=1) + (1-p) \cdot P(TL,d=2) = p \cdot 0.9 + (1-p) \cdot 0.6 = 0.9p - 0.6p + 0.6 = 0.3p + 0.6
+    \]
+    \[
+    P(TR) = p \cdot P(TR,d=1) + (1-p) \cdot P(TR,d=2) = p \cdot 0.1 + (1-p) \cdot 0.4 = 0.1p - 0.4p + 0.4 = 0.4 - 0.3p
+    \]
+
+    \subsection{}
+    Let's compute the expected return of the following conditional plans, assumie the agent starts in d=2:
+    
+    $P(GL) = P(GL|TL) \cdot P(TL) + P(GL|TR) \cdot P(TR) = 0.9*0.5 + 0.1*0.5 = 0.5$
+    
+    Plan 1:
+    \begin{itemize}
+        \item Move To d=1: Reward = -2
+        \item Listen: Reward = -1
+        \item If GR then OL : 
+        \[
+        E[OL|GR,d=1] = P(TL|GR,d=1) \cdot -100 + P(TR|GR,d=1) \cdot 10 = 0.1 \cdot (-100) + 0.9 \cdot 10 = -1
+        \]
+    \end{itemize}
+    The expected return of plan 1 is:\[R(*,move,1) + R(*,listen,1)+ P(GR)\cdot E[OL|GR,d=1] = -2 -1 +0.5*(-1) = -3.5 \]
+
+    Plan 2:
+    \begin{itemize}
+        \item Listen: Reward = -1
+        \item If GL
+        \begin{itemize}
+            \item Listen: Reward = -1
+        \end{itemize}
+        \item Else GR 
+        \begin{itemize}
+            \item OL: Reward = $E[OL|GR,d=2] = P(TL|GR,d=2) \cdot -50 + P(TR|GR,d=2) \cdot 10 = 0.4 \cdot (-50) + 0.6 \cdot 10 = -14$ 
+        \end{itemize}
+    \end{itemize}
+
+    The expected return of plan 2 is:\[R(*,listen,2)+ P(GL)\cdot R(*,listen,2) + P(GR)\cdot E[OL|GR,d=2] = -1 + 0.5\cdot (-1) + 0.5\cdot(-14) = -8.5 \]
+
+    \subsection{}
+    Given that the probability to get GL is 0.5
+    \begin{equation}{}
+        \begin{split}
+            P(GL,GL) &= P(GL|TL, d=1)P(GL|TL, d=1)P(TL) + P(GL|TR, d=1)P(GL|TR, d=1)P(TR) = 0.82\cdot P(TL) \\
+            P(GL,GR) &= P(GL|TL, d=1)P(GR|TL, d=1)P(TL) + P(GL|TR, d=1)P(GR|TR, d=1)P(TR) = 0.18\cdot P(TL) \\
+            P(GR,GR) &= P(GR|TL, d=1)P(GR|TL, d=1)P(TL) + P(GR|TR, d=1)P(GR|TR, d=1)P(TR) = 0.82\cdot P(TL) \\
+            P(GR,GL) &= P(GR|TL, d=1)P(GL|TL, d=1)P(TL) + P(GR|TR, d=1)P(GL|TR, d=1)P(TR) = 0.18\cdot P(TL) \\
+        \end{split}
+    \end{equation}
+    Now we can calculate the probabilities:
+    \begin{equation}
+        \begin{split}
+            P(TL|GL,GL) &= \frac{P(GL,GL|TL, d=1)P(TL)}{P(GL,GL)} = \frac{P(GL|TL, d=1)P(GL|TL, d=1)P(TL)}{P(GL,GL)} = \frac{0.81}{0.82} \\
+            P(TL|GL,GR)& = \frac{P(GL,GR|TL, d=1)P(TL)}{P(GL,GR)} = \frac{P(GL|TL, d=1)P(GR|TL, d=1)P(TL)}{P(GL,GR)} = \frac{0.09}{0.18} \\
+            P(TL|GR,GL)& = \frac{P(GR,GL|TL,d=1)P(TL)}{P(GR,GL)} = \frac{P(GR|TL, d=1)P(GL|TL, d=1)P(TL)}{P(GR,GL)}= \frac{0.09}{0.18}\\
+            P(TL|GR,GR) &= \frac{P(GR,GR|TL, d=1)P(TL)}{P(GR,GR)} = \frac{P(GR|TL, d=1)P(GR|TL, d=1)P(TL)}{P(GR,GR)} = \frac{0.01}{0.82} \\
+        \end{split}
+    \end{equation}
+
+    We can learn from this calcuation, that the more we explore the problem the more we can understand where the tiger might be. This helps us to make a better decision , since we open the gap between the probabilities of the tiger being on the left or right side given the observations.
+    We can see that it converge very quickly to a belif, and the inital belif makes a difference.
+
+    \section{}
+    Given a robot that throw a draft in a 1D line. The robot try to throw the draft to location $\mu^t$ but its actions are noisy and therefore it have a probability of $y^t=\mu^t+z \; \; , \; z \sim N(0,\sigma)$
+    \subsection{We would like to calculate the agent's policy $\pi ( y|\mu)$ in trems of likelihood}
+    The likelihood of the observation $y^t$ given the state $\mu^t$ is $P(y^t|\mu^t) = N(y^t|\mu^t,\sigma)$
+    \begin{equation}
+        \begin{split}
+            \mathcal{L}(\pi(y|\mu)) = \mathcal{L}(P(y^t|\mu^t,\sigma)) &= \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(y^t-\mu^t)^2}{2\sigma^2}}\\
+            &= \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(z^t)^2}{2\sigma^2}}
+        \end{split} 
+    \end{equation}
+
+    \subsection{Express the update rule}
+    The update rule is the following:
+    \begin{equation}
+        \begin{split}
+            \theta^{t+1} &= \theta^t + \alpha  G^t \nabla \log(\pi(A_t|S_t,\theta_t))\\
+        \end{split}
+    \end{equation}
+    Since in our case we would like to update $\mu^t$ so we could write
+    \begin{equation}
+        \begin{split}
+            \mu_{t+1} &= \mu_t + \alpha  G_t \nabla \log(\pi(A_t|S_t,\mu_t))\\
+            &= \mu_t + \alpha \cdot G_t \cdot \nabla\Bigg(\log(\frac{1}{\sqrt[]{2\pi\sigma^2}}\cdot \exp(-\frac{\|y-\mu\|^2}{2\sigma^2}))\Bigg) \\
+            &= \mu_t + \alpha \cdot G_t  \nabla\Bigg( \log(\frac{1}{\sqrt[]{2\pi\sigma^2}}) -\frac{\|y-\mu\|^2}{2\sigma^2} \Bigg)\\
+            &= \mu_t + \alpha \cdot G_t  \Bigg( \nabla\log(\frac{1}{\sqrt[]{2\pi\sigma^2}}) -\nabla \frac{\|y-\mu\|^2}{2\sigma^2} \Bigg)\\
+            &= \mu_t + \alpha \cdot G_t  \Bigg(  \frac{y-\mu}{\sigma^2} \Bigg)
+        \end{split}
+    \end{equation}
+    Where 
+    \[
+    G_t = \sum^T_{i=t+1} r_i
+    \]
+
+    \subsection{}
+    Let's define $r = -(m-y)^2$ as the reward function. we will learn $\mu$ using the algorithm
+    
+    To implement the algorithm for 1 step we can write the following:
+
+    Lets calculate $G_t$
+    \[
+    G_t = \mathbb{E}[r] = \mathbb{E}[-(m-y)^2] = -\mathbb{E}[(m-\mu - z)^2] \\
+    \]
+    \[
+    = -\mathbb{E}[(m-\mu)^2 - 2(m-\mu)z + z^2] = -\mathbb{E}[(m-\mu)^2] - \sigma^2 = -(m-\mu)^2 - \sigma^2
+    \]
+
+    Using the update rule from the previous question we can write where $\mu_t , y_t$ are scalars:
+
+    \begin{equation}
+        \begin{split}
+            \mu_{t+1} &= \mu_t + \alpha \cdot G_t  \Bigg(  \frac{y_t-\mu_t}{\sigma^2} \Bigg)\\
+            \mu_{t+1} &= \mu_t + \alpha \cdot   \Bigg(  \frac{y_t-\mu_t}{\sigma^2} \Bigg) \cdot (-(m-\mu)^2-\sigma^2)\\
+        \end{split}
+    \end{equation}
+
+    We whould like to find the $\mu$ that maximize the reward, so we can take the derivative of the reward function and set it to 0:
+    \[
+    \frac{\partial r}{\partial \mu} = 0 \Rightarrow 2(m-\mu) = 0 \Rightarrow \mu = m
+    \]
+
+
+
+    \subsection{We wished to calculate the expected change rate}
+    \begin{equation}
+        \begin{split}
+            \mathbb{E}[\mu_{t+1}-\mu_{t}] &= \mathbb{E}\bigg[-\alpha \frac{y - \mu}{\sigma^2} \cdot (m-y)^2\bigg]\\
+             &= \frac{\alpha}{\sigma^2}\mathbb{E}\bigg[(z) \cdot (m-(\mu + z))^2\bigg]\\
+                &= \frac{\alpha}{\sigma^2}\mathbb{E}\bigg[(z) \cdot (m-\mu - z)^2\bigg]\\
+                &= \frac{\alpha}{\sigma^2}\mathbb{E}\bigg[(z) \cdot (m-\mu)^2 - 2(m-\mu)z + z^2\bigg]\\
+                &= \frac{\alpha}{\sigma^2}\bigg(\mathbb{E}\Bigg[(z) \cdot (m-\mu)^2 \bigg] - \mathbb{E}\bigg[2(m-\mu)z^2\bigg] +\mathbb{E}\bigg[ z^3\bigg]\Bigg)\\
+                &= \frac{\alpha}{\sigma^2}\bigg( - 2(m-\mu)\sigma^2\Bigg)\\
+                &= -2\alpha(m-\mu)
+            \end{split}
+    \end{equation}
+    \subsection{}
+    Now when the robot learn from $\mu$ and $\sigma$ we would like to find the optimal $\mu$ and $\sigma$ of the learning.
+    \begin{equation}
+        \begin{split}
+            \nabla \log(\pi(y|\mu,\sigma)) &= \nabla \log(\frac{1}{\sqrt[]{2\pi\sigma^2}}\cdot \exp(-\frac{\|y-\mu\|^2}{2\sigma^2})) \\
+            &= \nabla \log(\frac{1}{\sqrt[]{2\pi\sigma^2}}) -\nabla \frac{\|y-\mu\|^2}{2\sigma^2}\\
+            \text{by }\mu &= \frac{y-\mu}{\sigma^2}\\
+            \text{by }\sigma &= \frac{\frac{-\sqrt{2\pi}}{2\pi\sigma^2}}{\frac{1}{\sqrt[]{2\pi \sigma^2}}} - \frac{-4\sigma(y-\mu)^2}{4\sigma^4}\\
+            &= -\frac{1}{\sigma}+\frac{(y-\mu)^2}{\sigma^3}\\
+        \end{split}
+    \end{equation}
+
+    When we have the gradient we can use the update rule to find the optimal $\mu$ and $\sigma$:
+    \begin{equation}
+        \begin{split}
+            \mu_{t+1} &= \mu_t + \alpha \cdot G_t  \Bigg(  \frac{y-\mu}{\sigma^2} \Bigg)\\
+            \sigma_{t+1} &= \sigma_t + \alpha \cdot G_t  \Bigg( -\frac{1}{\sigma}+\frac{(y-\mu)^2}{\sigma^3} \Bigg)\\
+        \end{split}
+    \end{equation}
+    we would like to find the optimal $\mu$ and $\sigma$ that maximize the reward, so we can take the derivative of the reward function and set it to 0:
+    the $\mu$ converge is the same as we found in previous sections, now we will look for the converge of $\sigma$:
+    we will derive the update rule for $\sigma$ and set it to 0:
+    \begin{equation}
+        \begin{split} 
+            \nabla \sigma &= \nabla \alpha \dot G_t \dot (-\frac{1}{\sigma}+\frac{(y-\mu)^2}{\sigma^3}) = 0\\
+                          &= \nabla \alpha \dot (-(m-\mu)^2 -\sigma^2) \dot (-\frac{1}{\sigma}+\frac{(y-\mu)^2}{\sigma^3}) = 0\\
+                          &= \nabla \alpha \big ( \frac{(m-\mu)^2}{\sigma} - \frac{(y-\mu)^2(m-\mu)^2}{\sigma^3}+\sigma - \frac{(y-\mu)^2}{\sigma}\big)\\
+                          (\mu = m)&= \nabla \alpha(\sigma-\frac{(y-m)^2}{\sigma})\\
+                          &= \alpha -\alpha \frac{(y-m)^2}{\sigma^2} = 0 \\
+                          &\iff \frac{(y-m)^2}{\sigma^2} = 1\\
+                          &\iff \sigma = (y-m)
+        \end{split}
+    \end{equation}
+    we get the $\sigma$ need to be equal to z wich is the noise with variance of $\sigma_{true}$.
+
 \end{document}
