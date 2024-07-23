@@ -1,10 +1,11 @@
-html,body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	font: 13px verdana,helvetica,arial,sans-serif;
+	font: 13px verdana, helvetica, arial, sans-serif;
 	padding: 20px 7%;
 	color: #333333;
 	max-width: 700px;
@@ -23,8 +24,11 @@ th,td {
 
 /* Blocks - general */
 
-h2,h3,h4,h5 {
-	color: #325B9D;
+h2,
+h3,
+h4,
+h5 {
+	color: #325b9d;
 	font-weight: 600;
 	font-size: 200%;
 }
@@ -42,7 +46,7 @@ h2 {
 h3 {
 	font-size: 140%;
 	line-height: 90%;
-	border-bottom: 1px solid #527BBD;
+	border-bottom: 1px solid #527bbd;
 	margin-top: 30px;
 }
 
@@ -65,9 +69,9 @@ pre {
 	padding: 5px;
 	line-height: 100%;
 	width: 90%; /* causes bug in IE 5.0 Windows */
-	scrollbar-face-color: #527BBD;
-	scrollbar-arrow-color: #DEE7F7;
-	scrollbar-track-color: #DEE7F7;
+	scrollbar-face-color: #527bbd;
+	scrollbar-arrow-color: #dee7f7;
+	scrollbar-track-color: #dee7f7;
 	padding-bottom: 24px!ie7;
 }
 
@@ -88,12 +92,15 @@ pre {
 
 /* End IE5 Mac hack */
 
-ul,ol,li {
+ul,
+ol,
+li {
 	margin: 0;
 	padding: 1px;
 }
 
-ul,ol {
+ul,
+ol {
 	margin-left: 25px;
 }
 
@@ -101,7 +108,8 @@ ul,ol {
 	margin-bottom: 15px;
 }
 
-.spacing li li, .spacing li:last-child {
+.spacing li li,
+.spacing li:last-child {
 	margin-bottom: 5px;
 }
 
@@ -111,6 +119,5 @@ hr {
 
 pre {
 	font-family: Courier New, Courier, mono;
-	font-size: 1.2em
+	font-size: 1.2em;
 }
-
